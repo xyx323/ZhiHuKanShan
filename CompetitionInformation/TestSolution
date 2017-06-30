@@ -1,0 +1,76 @@
+我们提供包含217360个问题的评测数据集，参赛者需要在这些问题上运行训练出的模型进行预测，并标注 Top 5 的话题标签。注意：预测出的话题标签之间存在顺序。
+
+
+
+提交注意事项及提交数据格式
+
+
+
+参赛队伍可以随时提交评测文件。评测文件格式为csv，如下：
+
+qid1,tid@1,tid@2,tid@3,tid@4,tid@5
+qid2,tid@1,tid@2,tid@3,tid@4,tid@5
+
+每行为一个 question_id, 同时给出预测的最可能的 5 个话题标签的topic_id。 question_id 和预测的话题结果之间，话题标签 topic_id 之间均使用半角逗号作为分隔符。不需要header。
+
+
+
+文件实例：
+
+6875,-3987,3292,4436,1667,6988
+4656,-9954,8931,-2642,8466,-7401
+
+其中第一列的6875, 4656是questioin_id。其余数据都是topic_id。（实例中数据仅做格式参考，真实数据会长很多。）
+
+
+
+注意事项
+
+预测出的 5 个话题标签按照预测得分，从大到小排序。
+话题标签默认是不重复的。遇到重复的话题标签，只保留第一次出现，并且其后的标签递补。去重后不满 5 个标签的，其余位置默认为 -1，-1 不和任何话题标签匹配。多于 5 个话题标签的，从第六位往后忽略。
+评测标准：
+准确率（Precision）: 预测出的标签命中了标注标签中的任何一个即视为正确。最终的准确率为每个位置上的准确率按位置加权。准确率评测的公式如下： `math Precision = \sum_{pos \in \{1,2,3,4,5\}} \frac {Precision@pos} {log_{pos + 1}} `
+
+
+
+
+
+
+召回率（Recall）: 预测出的 Top 5 标签中对原有标签的覆盖量。
+最终评价指标为 Precision 和 Recall 的调和平均数。即：
+
+
+评测函数伪代码：
+
+def eval(predict_label_and_marked_label_list):
+    """
+    :param predict_label_and_marked_label_list: 一个元组列表。例如
+    [ ([1, 2, 3, 4, 5], [4, 5, 6, 7]),
+      ([3, 2, 1, 4, 7], [5, 7, 3])
+     ]
+    需要注意这里 predict_label 是去重复的，例如 [1,2,3,2,4,1,6]，去重后变成[1,2,3,4,6]
+
+    marked_label_list 本身没有顺序性，但提交结果有，例如上例的命中情况分别为
+    [0，0，0，1，1]   (4，5命中)
+    [1，0，0，0，1]   (3，7命中)
+
+    """
+    right_label_num = 0  #总命中标签数量
+    right_label_at_pos_num = [0, 0, 0, 0, 0]  #在各个位置上总命中数量
+    sample_num = 0   #总问题数量
+    all_marked_label_num = 0    #总标签数量
+    for predict_labels, marked_labels in predict_label_and_marked_label_list:
+        sample_num += 1
+        marked_label_set = set(marked_labels)
+        all_marked_label_num += len(marked_label_set)
+        for pos, label in zip(range(0, min(len(predict_labels), 5)), predict_labels):
+            if label in marked_label_set:     #命中
+                right_label_num += 1
+                right_label_at_pos_num[pos] += 1
+
+    precision = 0.0
+    for pos, right_num in zip(range(0, 5), right_label_at_pos_num):
+        precision += ((right_num / float(sample_num))) / math.log(2.0 + pos)  # 下标0-4 映射到 pos1-5 + 1，所以最终+2
+    recall = float(right_label_num) / all_marked_label_num
+
+    return (precision * recall) / (precision + recall)
