@@ -1,3 +1,5 @@
+# coding: utf-8
+
 #!/usr/bin/python
 
 from __future__ import division
@@ -41,10 +43,12 @@ error_rate = np.sum(pred != test_Y) / test_Y.shape[0]
 print('Test error using softmax = {}'.format(error_rate))
 
 # do the same thing again, but output probabilities
+#采用softprob再计算一遍。softprob给出的结果是：一共六种皮肤病，测试集中每一个sample，属于任一种皮肤病的概率
 param['objective'] = 'multi:softprob'
 bst = xgb.train(param, xg_train, num_round, watchlist)
 # Note: this convention has been changed since xgboost-unity
 # get prediction, this is in 1D array, need reshape to (ndata, nclass)
+#pred_prob是一个被reshape为ndata*nclass的矩阵，给出的是每一个sample属于任一种皮肤病的概率
 pred_prob = bst.predict(xg_test).reshape(test_Y.shape[0], 6)
 pred_label = np.argmax(pred_prob, axis=1)
 error_rate = np.sum(pred != test_Y) / test_Y.shape[0]

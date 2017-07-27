@@ -2,3 +2,7 @@
 1.如何在Windows中安装XGBoost:请参阅笔记
 https://onenote.com/webapp/pages?token=PKki8i-c5Ux6v5eJ6-67MMiXZ-giiWMnsq27WfrKoD8wqs4IqhpiSkzzmJK-Em0QNJAjvUhyoNGW8Clbb4bJvW1ViXZAwcWi0&id=636362366464607252
 ------------------------------------------------------
+2.XGBoost解决多分类问题：见demo中的 mutticlass_classification以及：
+   http://blog.csdn.net/leo_xu06/article/details/52424924
+-------------------------------------------------------
+3.XGBoost参数详解：http://blog.csdn.net/zc02051126/article/details/46711047
