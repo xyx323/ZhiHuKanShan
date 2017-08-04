@@ -17,7 +17,7 @@ from six.moves import xrange
 
 # In[2]:
 
-topic_info = pd.read_table("./ieee_zhihu_cup/topic_info.txt",sep='\t',header=None)
+topic_info = pd.read_table("./Data/topic_info.txt",sep='\t',header=None)
 print(topic_info.iloc[0:5])
 
 
@@ -79,7 +79,7 @@ print(predict_reader.iloc[0:5])
 # In[9]:
 
 # 导入question_train_set
-eval_reader = pd.read_table('./ieee_zhihu_cup/question_eval_set.txt',sep='\t',header=None)
+eval_reader = pd.read_table('./Data/question_eval_set.txt',sep='\t',header=None)
 print(eval_reader.iloc[0:3])
 
 

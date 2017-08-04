@@ -39,14 +39,14 @@ from six.moves import xrange
 # In[2]:
 
 # 导入question_train_set
-reader = pd.read_table('./ieee_zhihu_cup/question_train_set.txt',sep='\t',header=None)
+reader = pd.read_table('./Data/question_train_set.txt',sep='\t',header=None)
 print(reader.iloc[0:5])
 
 
 # In[3]:
 
 # 导入question_topic_eval_set
-topic_reader = pd.read_table('./ieee_zhihu_cup/question_topic_train_set.txt',sep='\t',header=None)
+topic_reader = pd.read_table('./Data/question_topic_train_set.txt',sep='\t',header=None)
 print(topic_reader.iloc[0:5])
 
 
@@ -60,7 +60,7 @@ print(data_topic.iloc[0:5])
 # In[5]:
 
 # 导入topic_info
-label_reader = pd.read_table('./ieee_zhihu_cup/topic_info.txt',sep='\t',header=None)
+label_reader = pd.read_table('./Data/topic_info.txt',sep='\t',header=None)
 print(label_reader.iloc[0:5])
 
 
@@ -97,11 +97,11 @@ print(data_topic.iloc[:5])
 # In[8]:
 
 # 保存处理过后的文件
-data_topic.to_csv("./ieee_zhihu_cup/data_topic.txt", header=None, index=None, sep='\t')
+data_topic.to_csv("./Data/data_topic.txt", header=None, index=None, sep='\t')
 
 # 切分成10块保存
 for i in xrange(10):
-    data_topic_filename = './ieee_zhihu_cup/data_topic_block_' + str(i) + '.txt'
+    data_topic_filename = './Data/data_topic_block_' + str(i) + '.txt'
     if (i+1)*300000 < data_topic.shape[0]:
         data_topic.iloc[i*300000:(i+1)*300000].to_csv(
             data_topic_filename, header=None, index=None, sep='\t')

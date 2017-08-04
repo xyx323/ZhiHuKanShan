@@ -28,7 +28,7 @@ from six.moves import xrange
 # validation数据集占比
 tf.flags.DEFINE_float("dev_sample_percentage", .1, "Percentage of the training data to use for validation")
 # 数据集
-tf.flags.DEFINE_string("data_file", "./ieee_zhihu_cup/data_topic_block_0.txt", "Data source for the positive data.")
+tf.flags.DEFINE_string("data_file", "./Data/data_topic_block_0.txt", "Data source for the positive data.")
 
 # Model Hyperparameters
 # 词向量长度

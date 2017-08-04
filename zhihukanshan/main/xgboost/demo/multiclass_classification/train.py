@@ -12,6 +12,7 @@ data = np.loadtxt('./dermatology.data', delimiter=',',
         converters={33: lambda x: int(x == '?'), 34: lambda x: int(x)-1})
 sz = data.shape
 
+#以sz[0] * 0.7 为分界点，划分训练集和测试集
 train = data[:int(sz[0] * 0.7), :]
 test = data[int(sz[0] * 0.7):, :]
 
@@ -23,6 +24,7 @@ test_Y = test[:, 34]
 
 xg_train = xgb.DMatrix(train_X, label=train_Y)
 xg_test = xgb.DMatrix(test_X, label=test_Y)
+
 # setup parameters for xgboost
 param = {}
 # use softmax multi-class classification
@@ -35,8 +37,8 @@ param['nthread'] = 4
 param['num_class'] = 6
 
 watchlist = [(xg_train, 'train'), (xg_test, 'test')]
-num_round = 5
-bst = xgb.train(param, xg_train, num_round, watchlist)
+num_round = 5  # Number of boosting iterations.
+bst = xgb.train(param, xg_train, num_round, watchlist)  # watchlist: (parameter: eval) List of items to be evaluated during training, this allows user to watch performance on the validation set.
 # get prediction
 pred = bst.predict(xg_test)
 error_rate = np.sum(pred != test_Y) / test_Y.shape[0]

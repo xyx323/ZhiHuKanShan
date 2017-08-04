@@ -21,7 +21,7 @@ from six.moves import xrange
 # In[2]:
 
 # 导入question_train_set
-reader = pd.read_table('./ieee_zhihu_cup/question_eval_set.txt',sep='\t',header=None)
+reader = pd.read_table('./Data/question_eval_set.txt',sep='\t',header=None)
 print(reader.iloc[0:5])
 
 
