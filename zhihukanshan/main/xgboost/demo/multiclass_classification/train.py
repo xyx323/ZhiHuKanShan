@@ -36,7 +36,7 @@ param['silent'] = 1
 param['nthread'] = 4
 param['num_class'] = 6
 
-watchlist = [(xg_train, 'train'), (xg_test, 'test')]
+watchlist = [(xg_train, 'instance'), (xg_test, 'test')]
 num_round = 5  # Number of boosting iterations.
 bst = xgb.train(param, xg_train, num_round, watchlist)  # watchlist: (parameter: eval) List of items to be evaluated during training, this allows user to watch performance on the validation set.
 # get prediction

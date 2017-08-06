@@ -117,7 +117,7 @@ print("y_shape:",y.shape)
 # 保存字典
 vocab_processor.save("vocab_dict")
 
-# Split train/test set
+# Split instance/test set
 # 数据集切分为两部分，训练集和验证集
 dev_sample_index = -1 * int(FLAGS.dev_sample_percentage * float(len(y)))
 x_train, x_dev = x[:dev_sample_index], x[dev_sample_index:]

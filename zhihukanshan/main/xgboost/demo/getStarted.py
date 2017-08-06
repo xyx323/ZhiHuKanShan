@@ -1,7 +1,7 @@
 import xgboost as xgb
 
 # read in data
-dtrain = xgb.DMatrix('data/agaricus.txt.train')
+dtrain = xgb.DMatrix('data/agaricus.txt.instance')
 dtest = xgb.DMatrix('data/agaricus.txt.test')
 
 # specify parameters via map

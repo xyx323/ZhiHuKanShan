@@ -15,7 +15,7 @@ else:
     nfold = 5
 
 fi = open( sys.argv[1], 'r' )
-ftr = open( sys.argv[1]+'.train', 'w' )
+ftr = open( sys.argv[1]+'.instance', 'w' )
 fte = open( sys.argv[1]+'.test', 'w' )
 for l in fi:
     if random.randint( 1 , nfold ) == k:
